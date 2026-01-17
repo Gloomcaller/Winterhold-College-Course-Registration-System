@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Winterhold_College_Course_Registration_System
 {
     public class Program
