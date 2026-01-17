@@ -15,6 +15,26 @@ namespace Winterhold_College_Course_Registration_System.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Staff>()
+                .Property(s => s.Role)
+                .HasConversion<string>();
+
+            modelBuilder.Entity<Staff>()
+                .Property(s => s.Department)
+                .HasConversion<string>();
+
+            modelBuilder.Entity<Student>()
+                .Property(s => s.Major)
+                .HasConversion<string>();
+
+            modelBuilder.Entity<Course>()
+                .Property(c => c.Department)
+                .HasConversion<string>();
+
+            modelBuilder.Entity<Enrollment>()
+                .Property(e => e.Grade)
+                .HasConversion<string>();
+
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.Student)
                 .WithMany(s => s.Enrollments)

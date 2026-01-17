@@ -13,7 +13,7 @@ namespace Winterhold_College_Course_Registration_System.Models
         public string CourseName { get; set; }
 
         [Required, StringLength(20)]
-        public string Department { get; set; }
+        public Department Department { get; set; }
 
         public int ProfessorId { get; set; }
 

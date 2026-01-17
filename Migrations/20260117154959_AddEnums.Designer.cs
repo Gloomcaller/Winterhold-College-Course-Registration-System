@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Winterhold_College_Course_Registration_System.Data;
 
@@ -11,9 +12,11 @@ using Winterhold_College_Course_Registration_System.Data;
 namespace Winterhold_College_Course_Registration_System.Migrations
 {
     [DbContext(typeof(CollegeDbContext))]
-    partial class CollegeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260117154959_AddEnums")]
+    partial class AddEnums
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
