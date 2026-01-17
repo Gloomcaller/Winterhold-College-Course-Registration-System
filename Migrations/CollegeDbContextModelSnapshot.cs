@@ -76,7 +76,6 @@ namespace Winterhold_College_Course_Registration_System.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Grade")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StudentId")
@@ -100,7 +99,6 @@ namespace Winterhold_College_Course_Registration_System.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Department")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -139,11 +137,9 @@ namespace Winterhold_College_Course_Registration_System.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Grade")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Major")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 

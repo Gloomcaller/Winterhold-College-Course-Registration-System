@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Winterhold_College_Course_Registration_System</RootNamespace>
+    <UserSecretsId>4db438f2-3468-4508-bf35-4574aa131217</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

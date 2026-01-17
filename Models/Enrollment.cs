@@ -10,7 +10,7 @@
 
         public DateTime EnrollmentDate { get; set; }
 
-        public GradeLevel Grade { get; set; }
+        public GradeLevel? Grade { get; set; }
 
         public Student Student { get; set; }
 

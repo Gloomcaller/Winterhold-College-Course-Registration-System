@@ -12,8 +12,8 @@ using Winterhold_College_Course_Registration_System.Data;
 namespace Winterhold_College_Course_Registration_System.Migrations
 {
     [DbContext(typeof(CollegeDbContext))]
-    [Migration("20260117160503_AddEnums")]
-    partial class AddEnums
+    [Migration("20260117175052_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,7 +79,6 @@ namespace Winterhold_College_Course_Registration_System.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Grade")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StudentId")
@@ -103,7 +102,6 @@ namespace Winterhold_College_Course_Registration_System.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Department")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -142,11 +140,9 @@ namespace Winterhold_College_Course_Registration_System.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Grade")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Major")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 

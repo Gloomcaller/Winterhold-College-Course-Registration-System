@@ -15,9 +15,9 @@ namespace Winterhold_College_Course_Registration_System.Models
         public DateTime EnrollmentDate { get; set; }
 
         [StringLength(30)]
-        public Department Major { get; set; }
+        public Department? Major { get; set; }
 
-        public GradeLevel Grade { get; set; }
+        public GradeLevel? Grade { get; set; }
 
         public ICollection<Enrollment> Enrollments { get; set; }
     }
