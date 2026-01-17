@@ -7,4 +7,8 @@
     <RootNamespace>Winterhold_College_Course_Registration_System</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.5.1" />
+  </ItemGroup>
+
 </Project>
