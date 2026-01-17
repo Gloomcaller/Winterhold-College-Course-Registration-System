@@ -16,8 +16,15 @@ namespace Winterhold_College_Course_Registration_System.Controllers
             return View();
         }
 
-        public IActionResult TestHelper()
+        public IActionResult About()
         {
+            ViewBag.Message = "The College of Winterhold is Skyrim's oldest and most prestigious institution of magical learning.";
+            return View();
+        }
+
+        public IActionResult Contact()
+        {
+            ViewBag.Message = "Arcanaeum Library, Winterhold, Skyrim";
             return View();
         }
 

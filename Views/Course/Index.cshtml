@@ -1,0 +1,48 @@
+﻿@model List<Course>
+@{
+    ViewData["Title"] = "Course Catalog";
+}
+
+<h1>Course Catalog</h1>
+
+<div class="department-filter">
+    <strong>Filter by Magic School:</strong>
+    <a href="/Course">All</a>
+    @foreach (var dept in ViewBag.Departments)
+    {
+        <a href="/Course?department=@dept">@dept</a>
+    }
+</div>
+
+@if (ViewBag.SelectedDepartment != null)
+{
+    <h2>@ViewBag.SelectedDepartment Courses</h2>
+}
+
+<table class="course-table">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Course Name</th>
+            <th>Department</th>
+            <th>Professor</th>
+            <th>Credits</th>
+            <th>Icon</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.CourseCode</td>
+                <td>@course.CourseName</td>
+                <td>@course.Department</td>
+                <td>@course.Professor?.Name</td>
+                <td>@course.Credits</td>
+                <td>@Html.MagicSchoolIcon(course.Department)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>Total active courses: @Model.Count</p>

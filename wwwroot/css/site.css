@@ -135,3 +135,75 @@ body {
         padding: 1rem;
     }
 }
+
+/* FORMS */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.5rem;
+    border: 1px solid #3a7ca5;
+    border-radius: 4px;
+    background-color: #1a3a5f;
+    color: #e0e0e0;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+    color: #8bc7ff;
+}
+
+.btn-submit {
+    background-color: #2a5a8a;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+    .btn-submit:hover {
+        background-color: #3a7ca5;
+    }
+
+.text-danger {
+    color: #ff6b6b;
+}
+
+/* TABLES */
+.course-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+}
+
+    .course-table th, .course-table td {
+        padding: 0.8rem;
+        border: 1px solid #2a5a8a;
+        text-align: left;
+    }
+
+    .course-table th {
+        background-color: #1a3a5f;
+        color: #8bc7ff;
+    }
+
+.department-filter a {
+    margin: 0 0.5rem;
+    padding: 0.3rem 0.7rem;
+    background-color: #2a5a8a;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+    .department-filter a:hover {
+        background-color: #3a7ca5;
+    }
