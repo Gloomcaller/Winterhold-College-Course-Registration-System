@@ -1,5 +1,5 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using Winterhold_College_Course_Registration_System.Models;
 
 namespace Winterhold_College_Course_Registration_System.Controllers
