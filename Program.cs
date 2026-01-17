@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Winterhold_College_Course_Registration_System.Data;
 
 namespace Winterhold_College_Course_Registration_System
 {
@@ -7,6 +8,10 @@ namespace Winterhold_College_Course_Registration_System
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Add DbContext
+            builder.Services.AddDbContext<CollegeDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("CollegeDbConnection")));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
