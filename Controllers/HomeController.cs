@@ -16,6 +16,11 @@ namespace Winterhold_College_Course_Registration_System.Controllers
             return View();
         }
 
+        public IActionResult TestHelper()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
