@@ -1,8 +1,17 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Winterhold College";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Welcome to the College of Winterhold</h1>
+<p>Skyrim's premier institution for magical education since the First Era.</p>
+
+<section class="intro">
+    <h2>Enroll in the magical arts</h2>
+    <p>Choose from eight schools of magic, learn from master wizards, and shape your destiny.</p>
+    <a href="/Student/Enroll" class="button">Begin Enrollment</a>
+</section>
+
+<hr />
+
+<h3>Test Custom Helper Here:</h3>
+<p>Alteration Icon: @Html.MagicSchoolIcon(Department.Alteration)</p>

@@ -1,40 +1,137 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  margin-bottom: 60px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0a1a2a;
+    color: #e0e0e0;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+.site-header {
+    background: linear-gradient(135deg, #1a3a5f 0%, #0d2840 100%);
+    border-bottom: 3px solid #3a7ca5;
+    padding: 1rem 0;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+.header-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo img {
+    height: 60px;
+    width: auto;
+}
+
+.logo h1 {
+    font-size: 1.8rem;
+    color: #8bc7ff;
+    text-shadow: 1px 1px 3px #000;
+}
+
+.tagline {
+    font-style: italic;
+    color: #a3d0ff;
+    font-size: 0.9rem;
+}
+
+.main-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: #cce5ff;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.main-nav a:hover {
+    background-color: #2a5a8a;
+    color: #fff;
+}
+
+.main-content {
+    flex: 1;
+    width: 90%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: rgba(20, 40, 60, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 100, 200, 0.3);
+}
+
+.site-footer {
+    background-color: #0d2030;
+    border-top: 2px solid #2a5a8a;
+    padding: 1.5rem 0;
+    margin-top: auto;
+}
+
+.footer-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    color: #8cb3d9;
+}
+
+.footer-container p {
+    margin: 0.3rem 0;
+}
+
+.disclaimer {
+    font-size: 0.85rem;
+    color: #7a9bb8;
+    font-style: italic;
 }
 
 .magic-school-icon {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     vertical-align: middle;
-    margin-right: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    margin: 0 5px;
+    border: 1px solid #3a7ca5;
+    border-radius: 6px;
+    background-color: #1a3a5f;
+    padding: 2px;
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .main-nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .main-content {
+        padding: 1rem;
+    }
 }
