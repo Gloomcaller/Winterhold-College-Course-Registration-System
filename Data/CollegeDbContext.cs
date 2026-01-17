@@ -27,6 +27,10 @@ namespace Winterhold_College_Course_Registration_System.Data
                 .Property(s => s.Major)
                 .HasConversion<string>();
 
+            modelBuilder.Entity<Student>()
+                .Property(s => s.Grade)
+                .HasConversion<string>();
+
             modelBuilder.Entity<Course>()
                 .Property(c => c.Department)
                 .HasConversion<string>();

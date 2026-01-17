@@ -15,26 +15,41 @@ namespace Winterhold_College_Course_Registration_System.Migrations
                 table: "Students",
                 type: "nvarchar(30)",
                 maxLength: 30,
-                nullable: true,
+                nullable: false,
+                defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "nvarchar(30)",
-                oldMaxLength: 30);
+                oldMaxLength: 30,
+                oldNullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "Grade",
+                table: "Students",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Department",
                 table: "Staff",
                 type: "nvarchar(30)",
                 maxLength: 30,
-                nullable: true,
+                nullable: false,
+                defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "nvarchar(30)",
-                oldMaxLength: 30);
+                oldMaxLength: 30,
+                oldNullable: true);
 
-            migrationBuilder.AddColumn<string>(
+            migrationBuilder.AlterColumn<string>(
                 name: "Grade",
                 table: "Enrollments",
                 type: "nvarchar(max)",
-                nullable: true);
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
         }
 
         /// <inheritdoc />
@@ -42,31 +57,35 @@ namespace Winterhold_College_Course_Registration_System.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "Grade",
-                table: "Enrollments");
+                table: "Students");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Major",
                 table: "Students",
                 type: "nvarchar(30)",
                 maxLength: 30,
-                nullable: false,
-                defaultValue: "",
+                nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(30)",
-                oldMaxLength: 30,
-                oldNullable: true);
+                oldMaxLength: 30);
 
             migrationBuilder.AlterColumn<string>(
                 name: "Department",
                 table: "Staff",
                 type: "nvarchar(30)",
                 maxLength: 30,
-                nullable: false,
-                defaultValue: "",
+                nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(30)",
-                oldMaxLength: 30,
-                oldNullable: true);
+                oldMaxLength: 30);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Grade",
+                table: "Enrollments",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
         }
     }
 }

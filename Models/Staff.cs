@@ -10,12 +10,12 @@ namespace Winterhold_College_Course_Registration_System.Models
         public string Name { get; set; }
 
         [StringLength(30)]
-        public string Role { get; set; }
+        public Role Role { get; set; }
 
         public DateTime HireDate { get; set; }
 
         [StringLength(30)]
-        public Department? Department { get; set; }
+        public Department Department { get; set; }
 
         public ICollection<Course> CoursesTaught { get; set; }
     }
