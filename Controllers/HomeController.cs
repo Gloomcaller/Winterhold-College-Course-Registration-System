@@ -8,6 +8,9 @@ namespace Winterhold_College_Course_Registration_System.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.StudentCount = 47;
+            ViewBag.CourseCount = 32;
+            ViewBag.StaffCount = 8;
             return View();
         }
 

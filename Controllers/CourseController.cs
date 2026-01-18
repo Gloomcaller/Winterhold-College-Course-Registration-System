@@ -14,7 +14,7 @@ namespace Winterhold_College_Course_Registration_System.Controllers
             _context = context;
         }
 
-        public IActionResult Index(string? department)
+        public IActionResult Course(string? department, string sort = "code")
         {
             var courses = _context.Courses
                 .Include(c => c.Professor)
@@ -31,7 +31,17 @@ namespace Winterhold_College_Course_Registration_System.Controllers
                 ViewBag.SelectedDepartment = null;
             }
 
+            courses = sort switch
+            {
+                "name" => courses.OrderBy(c => c.CourseName),
+                "dept" => courses.OrderBy(c => c.Department),
+                "prof" => courses.OrderBy(c => c.Professor.Name),
+                "credits" => courses.OrderBy(c => c.Credits),
+                _ => courses.OrderBy(c => c.CourseCode)
+            };
+
             ViewBag.Departments = Enum.GetValues<Department>();
+            ViewBag.Sort = sort;
             return View(courses.ToList());
         }
     }

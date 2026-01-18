@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Winterhold_College_Course_Registration_System.Data;
 using Winterhold_College_Course_Registration_System.Models;
 
@@ -18,45 +16,40 @@ namespace Winterhold_College_Course_Registration_System.Controllers
         [HttpGet]
         public IActionResult Enroll()
         {
-            ViewBag.Courses = new SelectList(_context.Courses.Where(c => c.IsActive), "Id", "CourseName");
-            ViewBag.Majors = new SelectList(Enum.GetValues<Department>());
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Enroll(Student student, int[] selectedCourses)
+        public IActionResult Enroll(string Name, string Email, string BirthDate, int Major)
         {
-            if (ModelState.IsValid)
+            System.Diagnostics.Debug.WriteLine($"FORM SUBMITTED: {Name}, {Email}, {BirthDate}, {Major}");
+
+            try
             {
-                student.EnrollmentDate = DateTime.Now;
+                var student = new Student
+                {
+                    Name = Name,
+                    Email = Email,
+                    BirthDate = DateTime.Parse(BirthDate),
+                    Major = (Department)Major,
+                    EnrollmentDate = DateTime.Now,
+                    Grade = GradeLevel.Novice
+                };
+
                 _context.Students.Add(student);
                 _context.SaveChanges();
 
-                foreach (var courseId in selectedCourses)
-                {
-                    var enrollment = new Enrollment
-                    {
-                        StudentId = student.Id,
-                        CourseId = courseId,
-                        EnrollmentDate = DateTime.Now
-                    };
-                    _context.Enrollments.Add(enrollment);
-                }
-                _context.SaveChanges();
+                System.Diagnostics.Debug.WriteLine("STUDENT SAVED SUCCESSFULLY!");
 
-                return RedirectToAction("Success", new { id = student.Id });
+                return RedirectToAction("Index", "Home");
             }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"ERROR: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"STACK: {ex.StackTrace}");
 
-            ViewBag.Courses = new SelectList(_context.Courses.Where(c => c.IsActive), "Id", "CourseName");
-            ViewBag.Majors = new SelectList(Enum.GetValues<Department>());
-            return View(student);
-        }
-
-        public IActionResult Success(int id)
-        {
-            var student = _context.Students.Find(id);
-            return View(student);
+                return View();
+            }
         }
     }
 }

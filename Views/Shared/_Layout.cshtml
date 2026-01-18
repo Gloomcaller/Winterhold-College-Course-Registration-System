@@ -17,11 +17,21 @@
             </div>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/Course">Courses</a></li>
-                    <li><a href="/Student/Enroll">Enroll</a></li>
-                    <li><a href="/Home/About">About</a></li>
-                    <li><a href="/Home/Contact">Contact</a></li>
+                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "active" : "")">
+                        <a href="/">Home</a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Course" ? "active" : "")">
+                        <a href="/Course/Course">Courses</a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Student" ? "active" : "")">
+                        <a href="/Student/Enroll">Enroll</a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Action"]?.ToString() == "About" ? "active" : "")">
+                        <a href="/Home/About">About</a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Action"]?.ToString() == "Contact" ? "active" : "")">
+                        <a href="/Home/Contact">Contact</a>
+                    </li>
                 </ul>
             </nav>
         </div>

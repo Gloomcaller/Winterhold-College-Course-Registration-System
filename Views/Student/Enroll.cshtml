@@ -1,50 +1,41 @@
-﻿@model Student
-@{
+﻿@{
     ViewData["Title"] = "Enroll as a Student";
 }
 
 <h1>Enroll at Winterhold College</h1>
 
-<form method="post">
+<form method="post" action="/Student/Enroll">
     @Html.AntiForgeryToken()
 
     <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+        <label>Full Name</label>
+        <input name="Name" class="form-control" required />
     </div>
 
     <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
+        <label>Email</label>
+        <input name="Email" type="email" class="form-control" required />
     </div>
 
     <div class="form-group">
-        <label asp-for="BirthDate"></label>
-        <input asp-for="BirthDate" type="date" class="form-control" />
-        <span asp-validation-for="BirthDate" class="text-danger"></span>
+        <label>Birth Date</label>
+        <input name="BirthDate" type="date" class="form-control" required />
     </div>
 
     <div class="form-group">
-        <label asp-for="Major"></label>
-        <select asp-for="Major" asp-items="ViewBag.Majors" class="form-control">
+        <label>Major</label>
+        <select name="Major" class="form-control" required>
             <option value="">-- Select Major --</option>
+            <option value="0">Alteration</option>
+            <option value="1">Conjuration</option>
+            <option value="2">Destruction</option>
+            <option value="3">Illusion</option>
+            <option value="4">Restoration</option>
+            <option value="5">Mysticism</option>
+            <option value="6">Enchanting</option>
+            <option value="7">Management</option>
         </select>
-        <span asp-validation-for="Major" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label>Select Courses</label><br />
-        @foreach (var course in ViewBag.Courses)
-        {
-            <input type="checkbox" name="selectedCourses" value="@course.Value" /> @course.Text <br />
-        }
     </div>
 
     <button type="submit" class="btn-submit">Submit Enrollment</button>
 </form>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

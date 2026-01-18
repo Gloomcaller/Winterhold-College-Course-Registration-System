@@ -1,0 +1,58 @@
+﻿@model List<Course>
+@{
+    ViewData["Title"] = "Course Catalog";
+}
+
+<h1>Active Courses</h1>
+
+<div class="department-filter">
+    <strong>Filter by Magic School:</strong>
+    <a href="/Course/Course">All</a>
+    @foreach (var dept in ViewBag.Departments)
+    {
+        <a href="/Course/Course?department=@dept">@dept</a>
+    }
+</div>
+
+<table class="course-table">
+    <thead>
+        <tr>
+            <th><a href="?sort=code">Code</a></th>
+            <th><a href="?sort=name">Course Name</a></th>
+            <th><a href="?sort=dept">Department</a></th>
+            <th><a href="?sort=prof">Professor</a></th>
+            <th><a href="?sort=credits">Credits</a></th>
+            <th>Grade Level</th>
+            <th>Icon</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.CourseCode</td>
+                <td>@course.CourseName</td>
+                <td>@course.Department</td>
+                <td>@course.Professor?.Name</td>
+                <td>@course.Credits</td>
+                <td>
+                    @if (course.Credits <= 3)
+                    {
+                        <span class="grade-novice">Novice</span>
+                    }
+                    else if (course.Credits == 4)
+                    {
+                        <span class="grade-apprentice">Apprentice</span>
+                    }
+                    else
+                    {
+                        <span class="grade-adept">Adept</span>
+                    }
+                </td>
+                <td>@Html.MagicSchoolIcon(course.Department)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>Total active courses: @Model.Count</p>

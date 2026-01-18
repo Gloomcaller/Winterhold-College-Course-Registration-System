@@ -15,7 +15,6 @@ namespace Winterhold_College_Course_Registration_System.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Converter
             modelBuilder.Entity<Staff>()
                 .Property(s => s.Role)
                 .HasConversion<string>();
@@ -40,7 +39,6 @@ namespace Winterhold_College_Course_Registration_System.Data
                 .Property(e => e.Grade)
                 .HasConversion<string>();
 
-            // Relationships
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.Student)
                 .WithMany(s => s.Enrollments)

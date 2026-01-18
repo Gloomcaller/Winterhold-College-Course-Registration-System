@@ -1,26 +1,111 @@
 ﻿@{
-    ViewData["Title"] = "Winterhold College";
+    ViewData["Title"] = "College of Winterhold";
 }
 
-<h1>Welcome to the College of Winterhold</h1>
-<p>Skyrim's premier institution for magical education since the First Era.</p>
+<div class="hero">
+    <h1>Welcome to the College of Winterhold</h1>
+    <p>For over 4,000 years, the College has stood as Skyrim's center of magical learning, home to the brightest mages, the deepest secrets, and the most perilous and rewarding forms of magic.</p>
+    <p>Founded in the Merethic Era, our institution has weathered the passage of time, political turmoil, and even the Great Collapse that claimed much of Winterhold. Through it all, our commitment to magical study and preservation remains unshaken.</p>
+    <a href="/Student/Enroll" class="cta-button">Begin Your Journey</a>
+</div>
 
-<section class="intro">
-    <h2>Enroll in the magical arts</h2>
-    <p>Choose from eight schools of magic, learn from master wizards, and shape your destiny.</p>
-    <a href="/Student/Enroll" class="button">Begin Enrollment</a>
+<div class="stats">
+    <div class="stat-card">
+        <h3>@ViewBag.StudentCount Students</h3>
+        <p>Currently studying the magical arts</p>
+    </div>
+    <div class="stat-card">
+        <h3>@ViewBag.CourseCount Active Courses</h3>
+        <p>Across eight schools of magic</p>
+    </div>
+    <div class="stat-card">
+        <h3>@ViewBag.StaffCount Masters</h3>
+        <p>Including Archmage Savos Aren</p>
+    </div>
+</div>
+
+<section class="magic-schools">
+    <h2>The Eight Schools of Magic</h2>
+    <p>Each school represents a different approach to manipulating the magical energies of Mundus. Mastery of multiple schools is encouraged for a well-rounded magical education.</p>
+    <div class="school-grid">
+        @foreach (var dept in Enum.GetValues<Department>())
+        {
+            <div class="school-item">
+                @Html.MagicSchoolIcon(dept)
+                <h4>@dept</h4>
+                <p>
+                    @switch (dept.ToString())
+                    {
+                        case "Alteration":
+                            <text>Manipulate physical reality, altering the world around you through will alone.</text>
+                            break;
+                        case "Conjuration":
+                            <text>Summon beings and objects from Oblivion and other planes of existence.</text>
+                            break;
+                        case "Destruction":
+                            <text>Channel raw elemental force to destroy your enemies with fire, frost, and shock.</text>
+                            break;
+                        case "Illusion":
+                            <text>Influence minds and perceptions, bending reality to your will through subtle magic.</text>
+                            break;
+                        case "Restoration":
+                            <text>Heal wounds, protect against magic, and turn undead with holy light.</text>
+                            break;
+                        case "Mysticism":
+                            <text>Study the nature of magic itself, exploring the fundamental forces of Aetherius.</text>
+                            break;
+                        case "Enchanting":
+                            <text>Imbue items with magical properties, creating artifacts of power and utility.</text>
+                            break;
+                        case "Management":
+                            <text>College administration, history, and magical lore essential for leadership.</text>
+                            break;
+                    }
+                </p>
+            </div>
+        }
+    </div>
 </section>
 
-<hr />
+<section class="additional-content">
+    <div class="content-columns">
+        <div class="content-column">
+            <h3>Library & Archives</h3>
+            <p>The Arcanaeum houses one of Tamriel's most extensive collections of magical texts, including rare Daedric manuscripts and ancient Merethic scrolls. Access is granted to all students under the watchful eye of Urag gro-Shub.</p>
+        </div>
+        <div class="content-column">
+            <h3>Practical Training</h3>
+            <p>Beyond theory, students engage in practical spellcasting in our shielded chambers. Field expeditions to ancient Nordic ruins and Dwemer cities provide real-world experience under master supervision.</p>
+        </div>
+        <div class="content-column">
+            <h3>Research Opportunities</h3>
+            <p>Advanced students may join research teams studying teleportation, soul gem refinement, or the effects of magicka saturation on local flora and fauna. Publication in the "Winterhold Quarterly" is encouraged.</p>
+        </div>
+    </div>
+</section>
 
-<h3>Test Custom Helper Here:</h3>
-<p>Alteration Icon: @Html.MagicSchoolIcon(Department.Alteration)</p>
-<p>Conjuration Icon: @Html.MagicSchoolIcon(Department.Conjuration)</p>
-<p>Destruction Icon: @Html.MagicSchoolIcon(Department.Destruction)</p>
-<p>Enchanting Icon: @Html.MagicSchoolIcon(Department.Enchanting)</p>
-<p>Illusion Icon: @Html.MagicSchoolIcon(Department.Illusion)</p>
-<p>Management Icon: @Html.MagicSchoolIcon(Department.Management)</p>
-<p>Mysticism Icon: @Html.MagicSchoolIcon(Department.Mysticism)</p>
-<p>Restoration Icon: @Html.MagicSchoolIcon(Department.Restoration)</p>
+<section class="testimonial">
+    <h3>Words from Our Alumni</h3>
+    <blockquote>
+        "The College didn't just teach me spells—it taught me responsibility. Magic is a tool, and here I learned to wield it with wisdom."
+        <cite>— Farengar Secret-Fire, Court Wizard of Whiterun</cite>
+    </blockquote>
 
-<hr />
+    <blockquote>
+        "As a former student of the Synod, I found the College's approach to magical research refreshingly open-minded. The freedom to explore all schools of magic without political restriction changed my entire perspective on the arcane arts."
+        <cite>— Mirabelle Ervine, Former Master Wizard</cite>
+    </blockquote>
+
+    <blockquote>
+        "The Arcanaeum's collection is unparalleled. Years after graduation, I still return to consult texts I can't find anywhere else in Tamriel. Urag may grumble, but he knows every scroll by heart."
+        <cite>— Orthorn, Independent Researcher of Conjuration</cite>
+    </blockquote>
+</section>
+
+<section class="notice">
+    <h3>Admission Requirements & Policies</h3>
+    <p>All prospective students must demonstrate basic magical aptitude through a simple concentration test.</p>
+    <p>Applicants without innate ability may be considered for non-magical study programs.</p>
+    <p>Unsanctioned spellcasting within the city limits of Winterhold is strictly prohibited by order of Jarl Korir. Violators face fines and potential expulsion.</p>
+    <p>The College assumes no responsibility for dimensional rifts, summoned Daedra, or unintended transformations resulting from experimental magic.</p>
+</section>
