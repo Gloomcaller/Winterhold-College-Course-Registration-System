@@ -1,1 +1,11 @@
-# Winterhold-College-Course-Registration-System
+# Winterhold College TODO:
+- Contact page isn't working.
+- Courses should be able to be sorted by grade level.
+- Courses table should stay on the department selected.
+- When students enroll, they should be able to select only up to 2 novice-grade courses.
+- All pages should be in the same directory until there are enough pages for organization.
+- Database needs a review/check-up.
+- CollegeDbContext needs work.
+- More pages need to be added.
+- Dropdown menu to store pages by category.
+- Admin service and Student service will begin development after all of the above are completed.
