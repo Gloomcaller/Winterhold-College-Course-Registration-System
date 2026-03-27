@@ -1,0 +1,38 @@
+@model List<Winterhold_College_Course_Registration_System.Models.Staff>
+@{
+    ViewData["Title"] = "Faculty and Staff";
+    var byRole = Model.GroupBy(s => s.Role).OrderBy(g => g.Key);
+}
+
+<h1>Faculty and Staff</h1>
+<p class="text-muted mb-4">The College of Winterhold is guided by some of Tamriel's most distinguished magical scholars.</p>
+
+@foreach (var group in byRole)
+{
+    <div class="about-section mb-4">
+        <h2>@group.Key</h2>
+        <div class="leadership-grid">
+            @foreach (var member in group.OrderBy(s => s.Name))
+            {
+                <div class="leader-card">
+                    <h3>@member.Name</h3>
+                    @if (member.Department.HasValue)
+                    {
+                        <p>
+                            @Html.MagicSchoolIcon(member.Department)
+                            <em>School of @member.Department</em>
+                        </p>
+                    }
+                    <p class="text-muted small">Joined @member.HireDate.ToString("yyyy")</p>
+                    @if (member.CoursesTaught != null && member.CoursesTaught.Any())
+                    {
+                        <p class="small">
+                            Teaching:
+                            @string.Join(", ", member.CoursesTaught.Select(c => c.CourseCode))
+                        </p>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+}

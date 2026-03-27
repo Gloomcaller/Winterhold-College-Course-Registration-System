@@ -4,26 +4,76 @@
 
 <h1>Contact the College</h1>
 
-<div class="contact-info">
-    <h3>Location</h3>
-    <p>
-        College of Winterhold<br />
-        Winterhold, Skyrim<br />
-        (Northeast coast, along the Sea of Ghosts)
-    </p>
+<div class="row">
+    <div class="col-md-5">
+        <div class="contact-info">
+            <h3>Location</h3>
+            <p>
+                College of Winterhold<br />
+                Winterhold, Skyrim<br />
+                Northeast coast, along the Sea of Ghosts
+            </p>
 
-    <h3>Send a Courier</h3>
-    <p>
-        Address letters to:<br />
-        <em>Arcanaeum Library, College of Winterhold, Winterhold, Skyrim</em>
-    </p>
+            <h3>Send a Courier</h3>
+            <p>
+                Address letters to:<br />
+                <em>Arcanaeum Library, College of Winterhold, Winterhold, Skyrim</em>
+            </p>
 
-    <h3>Magical Communication</h3>
-    <p>
-        For urgent magical matters, use the sending stone in the Hall of Elements.<br />
-        <small>(Standard sending fee: 5 septims per message)</small>
-    </p>
+            <h3>Magical Communication</h3>
+            <p>
+                For urgent magical matters, use the sending stone in the Hall of Elements.<br />
+                <small>Standard sending fee: 5 septims per message</small>
+            </p>
 
-    <h3>Admissions Office</h3>
-    <p>Speak with Faralda at the main gate for entrance exams and enrollment inquiries.</p>
+            <h3>Admissions Office</h3>
+            <p>Speak with Faralda at the main gate for entrance exams and enrollment inquiries.</p>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <div class="about-section">
+            <h2>Send a Message</h2>
+
+            @if (!string.IsNullOrEmpty(ViewBag.ContactSuccess as string))
+            {
+                <div class="alert alert-success" role="alert">
+                    @ViewBag.ContactSuccess
+                </div>
+            }
+
+            @if (!string.IsNullOrEmpty(ViewBag.ContactError as string))
+            {
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.ContactError
+                </div>
+            }
+
+            <form method="post" action="/Home/Contact">
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <label class="form-label">Your Name</label>
+                    <input name="SenderName" class="form-control wh-input" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Your Email</label>
+                    <input name="SenderEmail" type="email" class="form-control wh-input" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Subject</label>
+                    <input name="Subject" class="form-control wh-input" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Message</label>
+                    <textarea name="Message" class="form-control wh-input" rows="5" required></textarea>
+                </div>
+
+                <button type="submit" class="btn wh-btn-primary">Send Message</button>
+            </form>
+        </div>
+    </div>
 </div>

@@ -21,28 +21,29 @@ namespace Winterhold_College_Course_Registration_System.Controllers
                 .Where(c => c.IsActive)
                 .AsQueryable();
 
+            Department? selectedDept = null;
             if (!string.IsNullOrEmpty(department) && Enum.TryParse<Department>(department, out var dept))
             {
                 courses = courses.Where(c => c.Department == dept);
-                ViewBag.SelectedDepartment = dept;
-            }
-            else
-            {
-                ViewBag.SelectedDepartment = null;
+                selectedDept = dept;
             }
 
             courses = sort switch
             {
-                "name" => courses.OrderBy(c => c.CourseName),
-                "dept" => courses.OrderBy(c => c.Department),
-                "prof" => courses.OrderBy(c => c.Professor.Name),
-                "credits" => courses.OrderBy(c => c.Credits),
-                _ => courses.OrderBy(c => c.CourseCode)
+                "name"       => courses.OrderBy(c => c.CourseName),
+                "dept"       => courses.OrderBy(c => c.Department),
+                "prof"       => courses.OrderBy(c => c.Professor!.Name),
+                "credits"    => courses.OrderBy(c => c.Credits),
+                "gradelevel" => courses.OrderBy(c => c.GradeLevel),
+                _            => courses.OrderBy(c => c.CourseCode)
             };
 
+            ViewBag.SelectedDepartment = selectedDept;
             ViewBag.Departments = Enum.GetValues<Department>();
             ViewBag.Sort = sort;
+
             return View(courses.ToList());
         }
     }
 }
+

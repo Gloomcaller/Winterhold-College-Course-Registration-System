@@ -1,58 +1,81 @@
 ﻿@model List<Course>
 @{
     ViewData["Title"] = "Course Catalog";
+    string? selectedDept = ViewBag.SelectedDepartment?.ToString();
+    string currentSort = ViewBag.Sort ?? "code";
+
+    string SortLink(string sortKey) =>
+        selectedDept != null
+            ? $"/Course/Course?department={selectedDept}&sort={sortKey}"
+            : $"/Course/Course?sort={sortKey}";
+
+    string SortClass(string sortKey) => currentSort == sortKey ? "sort-active" : "";
 }
 
-<h1>Active Courses</h1>
+<h1>Course Catalog</h1>
 
-<div class="department-filter">
-    <strong>Filter by Magic School:</strong>
-    <a href="/Course/Course">All</a>
+<div class="department-filter mb-3">
+    <strong>Filter by School:</strong>
+    <a href="/Course/Course?sort=@currentSort" class="filter-btn @(selectedDept == null ? "active" : "")">All</a>
     @foreach (var dept in ViewBag.Departments)
     {
-        <a href="/Course/Course?department=@dept">@dept</a>
+        <a href="/Course/Course?department=@dept&sort=@currentSort"
+           class="filter-btn @(selectedDept == dept.ToString() ? "active" : "")">@dept</a>
     }
 </div>
 
-<table class="course-table">
-    <thead>
-        <tr>
-            <th><a href="?sort=code">Code</a></th>
-            <th><a href="?sort=name">Course Name</a></th>
-            <th><a href="?sort=dept">Department</a></th>
-            <th><a href="?sort=prof">Professor</a></th>
-            <th><a href="?sort=credits">Credits</a></th>
-            <th>Grade Level</th>
-            <th>Icon</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var course in Model)
-        {
-            <tr>
-                <td>@course.CourseCode</td>
-                <td>@course.CourseName</td>
-                <td>@course.Department</td>
-                <td>@course.Professor?.Name</td>
-                <td>@course.Credits</td>
-                <td>
-                    @if (course.Credits <= 3)
-                    {
-                        <span class="grade-novice">Novice</span>
-                    }
-                    else if (course.Credits == 4)
-                    {
-                        <span class="grade-apprentice">Apprentice</span>
-                    }
-                    else
-                    {
-                        <span class="grade-adept">Adept</span>
-                    }
-                </td>
-                <td>@Html.MagicSchoolIcon(course.Department)</td>
-            </tr>
-        }
-    </tbody>
-</table>
+@if (selectedDept != null)
+{
+    <p class="text-muted mb-2">Showing courses in the School of <strong>@selectedDept</strong>.</p>
+}
 
-<p>Total active courses: @Model.Count</p>
+<div class="table-responsive">
+    <table class="course-table">
+        <thead>
+            <tr>
+                <th><a href="@SortLink("code")" class="@SortClass("code")">Code</a></th>
+                <th><a href="@SortLink("name")" class="@SortClass("name")">Course Name</a></th>
+                <th><a href="@SortLink("dept")" class="@SortClass("dept")">Department</a></th>
+                <th><a href="@SortLink("gradelevel")" class="@SortClass("gradelevel")">Grade Level</a></th>
+                <th><a href="@SortLink("prof")" class="@SortClass("prof")">Professor</a></th>
+                <th><a href="@SortLink("credits")" class="@SortClass("credits")">Credits</a></th>
+                <th>School</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in Model)
+            {
+                <tr>
+                    <td>@course.CourseCode</td>
+                    <td>
+                        @course.CourseName
+                        @if (!string.IsNullOrEmpty(course.Description))
+                        {
+                            <small class="d-block text-muted">@course.Description</small>
+                        }
+                    </td>
+                    <td>@course.Department</td>
+                    <td>
+                        @{
+                            var glClass = course.GradeLevel switch
+                            {
+                                GradeLevel.Novice      => "grade-novice",
+                                GradeLevel.Apprentice  => "grade-apprentice",
+                                GradeLevel.Adept       => "grade-adept",
+                                GradeLevel.Expert      => "grade-expert",
+                                GradeLevel.Master      => "grade-master",
+                                _                      => ""
+                            };
+                        }
+                        <span class="@glClass">@course.GradeLevel</span>
+                    </td>
+                    <td>@course.Professor?.Name</td>
+                    <td>@course.Credits</td>
+                    <td>@Html.MagicSchoolIcon(course.Department)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<p class="text-muted mt-2">@Model.Count course(s) shown.</p>

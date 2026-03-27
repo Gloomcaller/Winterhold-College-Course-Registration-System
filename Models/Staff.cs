@@ -8,6 +8,6 @@
 
         public Department? Department { get; set; }
 
-        public ICollection<Course> CoursesTaught { get; set; }
+        public ICollection<Course> CoursesTaught { get; set; } = new List<Course>();
     }
 }

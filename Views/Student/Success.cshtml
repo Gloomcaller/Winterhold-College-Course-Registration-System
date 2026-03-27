@@ -1,9 +1,74 @@
-﻿@model Student
+﻿@model Winterhold_College_Course_Registration_System.Models.Student
 @{
     ViewData["Title"] = "Enrollment Successful";
 }
 
-<h1>Enrollment Successful!</h1>
-<p>Welcome to Winterhold College, @Model.Name!</p>
-<p>Your student record has been created. You will receive an email at @Model.Email with further instructions.</p>
-<p><a href="/">Return to Home</a></p>
+<div class="text-center mb-4">
+    <h1>Enrollment Confirmed</h1>
+    <p class="text-muted">Welcome to the College of Winterhold, <strong>@Model.Name</strong>.</p>
+</div>
+
+<div class="about-section">
+    <h2>Your Student Record</h2>
+    <table class="table wh-table mt-3">
+        <tr><th>Name</th><td>@Model.Name</td></tr>
+        <tr><th>Email</th><td>@Model.Email</td></tr>
+        <tr><th>Major</th><td>@Model.Major</td></tr>
+        <tr><th>Grade</th><td><span class="grade-novice">@Model.Grade</span></td></tr>
+        <tr><th>Enrollment Date</th><td>@Model.EnrollmentDate.ToString("MMMM d, yyyy")</td></tr>
+    </table>
+</div>
+
+@if (Model.Enrollments != null && Model.Enrollments.Any())
+{
+    <div class="about-section">
+        <h2>Courses Registered</h2>
+        <table class="course-table mt-3">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Course Name</th>
+                    <th>Department</th>
+                    <th>Grade Level</th>
+                    <th>Credits</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var enrollment in Model.Enrollments)
+                {
+                    <tr>
+                        <td>@enrollment.Course.CourseCode</td>
+                        <td>@enrollment.Course.CourseName</td>
+                        <td>@enrollment.Course.Department</td>
+                        <td>
+                            @{
+                                var glClass = enrollment.Course.GradeLevel switch
+                                {
+                                    GradeLevel.Novice     => "grade-novice",
+                                    GradeLevel.Apprentice => "grade-apprentice",
+                                    GradeLevel.Adept      => "grade-adept",
+                                    GradeLevel.Expert     => "grade-expert",
+                                    GradeLevel.Master     => "grade-master",
+                                    _                     => ""
+                                };
+                            }
+                            <span class="@glClass">@enrollment.Course.GradeLevel</span>
+                        </td>
+                        <td>@enrollment.Course.Credits</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="about-section">
+        <p class="text-muted">No courses were selected at enrollment. Visit the <a href="/Course/Course">Course Catalog</a> to browse available courses.</p>
+    </div>
+}
+
+<div class="mt-4">
+    <a href="/" class="btn wh-btn-primary">Return to Home</a>
+    <a href="/Course/Course" class="btn wh-btn-secondary ms-2">Browse Courses</a>
+</div>

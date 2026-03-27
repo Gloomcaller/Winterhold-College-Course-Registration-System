@@ -1,16 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using Winterhold_College_Course_Registration_System.Data;
 using Winterhold_College_Course_Registration_System.Models;
 
 namespace Winterhold_College_Course_Registration_System.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly CollegeDbContext _context;
+
+        public HomeController(CollegeDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
-            ViewBag.StudentCount = 47;
-            ViewBag.CourseCount = 32;
-            ViewBag.StaffCount = 8;
+            ViewBag.StudentCount = _context.Students.Count();
+            ViewBag.CourseCount = _context.Courses.Count(c => c.IsActive);
+            ViewBag.StaffCount = _context.Staff.Count();
             return View();
         }
 
@@ -21,14 +30,38 @@ namespace Winterhold_College_Course_Registration_System.Controllers
 
         public IActionResult About()
         {
-            ViewBag.Message = "The College of Winterhold is Skyrim's oldest and most prestigious institution of magical learning.";
             return View();
         }
 
+        [HttpGet]
         public IActionResult Contact()
         {
-            ViewBag.Message = "Arcanaeum Library, Winterhold, Skyrim";
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Contact(string SenderName, string SenderEmail, string Subject, string Message)
+        {
+            if (string.IsNullOrWhiteSpace(SenderName) || string.IsNullOrWhiteSpace(SenderEmail)
+                || string.IsNullOrWhiteSpace(Subject) || string.IsNullOrWhiteSpace(Message))
+            {
+                ViewBag.ContactError = "All fields are required.";
+                return View();
+            }
+
+            // In a real implementation, send email here. For the mockup, we confirm receipt.
+            ViewBag.ContactSuccess = $"Your message has been received, {SenderName}. A courier will respond to {SenderEmail} shortly.";
+            return View();
+        }
+
+        public IActionResult Faculty()
+        {
+            var staff = _context.Staff
+                .OrderBy(s => s.Role)
+                .ThenBy(s => s.Name)
+                .ToList();
+            return View(staff);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -38,3 +71,4 @@ namespace Winterhold_College_Course_Registration_System.Controllers
         }
     }
 }
+

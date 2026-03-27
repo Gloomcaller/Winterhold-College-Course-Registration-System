@@ -1,41 +1,123 @@
 ﻿@{
     ViewData["Title"] = "Enroll as a Student";
+    var allCourses = ViewBag.Courses as List<Winterhold_College_Course_Registration_System.Models.Course> ?? new();
+    var coursesByLevel = allCourses.GroupBy(c => c.GradeLevel).OrderBy(g => g.Key);
 }
 
 <h1>Enroll at Winterhold College</h1>
+<p class="text-muted mb-4">Complete the form below to register as a student. You may select up to 2 Novice-grade courses upon enrollment.</p>
+
+@if (!string.IsNullOrEmpty(ViewBag.EnrollmentError as string))
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.EnrollmentError
+    </div>
+}
 
 <form method="post" action="/Student/Enroll">
     @Html.AntiForgeryToken()
 
-    <div class="form-group">
-        <label>Full Name</label>
-        <input name="Name" class="form-control" required />
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="section-heading">Student Information</h3>
+
+            <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input name="Name" class="form-control wh-input" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email Address</label>
+                <input name="Email" type="email" class="form-control wh-input" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Date of Birth</label>
+                <input name="BirthDate" type="date" class="form-control wh-input" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Declared Major</label>
+                <select name="Major" class="form-select wh-input" required>
+                    <option value="">-- Select a School of Magic --</option>
+                    @foreach (var dept in Enum.GetValues<Winterhold_College_Course_Registration_System.Models.Department>())
+                    {
+                        <option value="@((int)dept)">@dept</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h3 class="section-heading">Course Selection</h3>
+            <p class="text-muted small">
+                Novice courses selected: <span id="noviceCount" class="fw-bold">0</span> / 2
+            </p>
+            <div id="noviceWarning" class="alert alert-warning d-none" role="alert">
+                You may only select up to 2 Novice-grade courses.
+            </div>
+
+            @foreach (var group in coursesByLevel)
+            {
+                <div class="course-group mb-3">
+                    <h5 class="grade-group-heading @group.Key.ToString().ToLower()">@group.Key Level</h5>
+                    @foreach (var course in group.OrderBy(c => c.Department).ThenBy(c => c.CourseCode))
+                    {
+                        <div class="form-check course-check @(group.Key == Winterhold_College_Course_Registration_System.Models.GradeLevel.Novice ? "novice-course" : "")">
+                            <input class="form-check-input course-checkbox"
+                                   type="checkbox"
+                                   name="SelectedCourseIds"
+                                   value="@course.Id"
+                                   id="course_@course.Id"
+                                   data-gradelevel="@course.GradeLevel" />
+                            <label class="form-check-label" for="course_@course.Id">
+                                <span class="course-code">@course.CourseCode</span> — @course.CourseName
+                                <small class="text-muted">(@course.Department | @course.Credits cr | @course.Professor?.Name)</small>
+                            </label>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
     </div>
 
-    <div class="form-group">
-        <label>Email</label>
-        <input name="Email" type="email" class="form-control" required />
-    </div>
-
-    <div class="form-group">
-        <label>Birth Date</label>
-        <input name="BirthDate" type="date" class="form-control" required />
-    </div>
-
-    <div class="form-group">
-        <label>Major</label>
-        <select name="Major" class="form-control" required>
-            <option value="">-- Select Major --</option>
-            <option value="0">Alteration</option>
-            <option value="1">Conjuration</option>
-            <option value="2">Destruction</option>
-            <option value="3">Illusion</option>
-            <option value="4">Restoration</option>
-            <option value="5">Mysticism</option>
-            <option value="6">Enchanting</option>
-            <option value="7">Management</option>
-        </select>
-    </div>
-
-    <button type="submit" class="btn-submit">Submit Enrollment</button>
+    <button type="submit" class="btn wh-btn-primary mt-3">Submit Enrollment</button>
+    <a href="/" class="btn wh-btn-secondary mt-3 ms-2">Cancel</a>
 </form>
+
+@section Scripts {
+    <script>
+        const checkboxes = document.querySelectorAll('.course-checkbox');
+        const noviceCountEl = document.getElementById('noviceCount');
+        const noviceWarning = document.getElementById('noviceWarning');
+
+        function updateNoviceCount() {
+            let count = 0;
+            checkboxes.forEach(cb => {
+                if (cb.checked && cb.dataset.gradelevel === 'Novice') count++;
+            });
+            noviceCountEl.textContent = count;
+
+            if (count > 2) {
+                noviceWarning.classList.remove('d-none');
+                noviceCountEl.classList.add('text-danger');
+            } else {
+                noviceWarning.classList.add('d-none');
+                noviceCountEl.classList.remove('text-danger');
+            }
+        }
+
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', function () {
+                // Enforce novice limit in the UI
+                if (this.checked && this.dataset.gradelevel === 'Novice') {
+                    const noviceChecked = [...checkboxes].filter(c => c.checked && c.dataset.gradelevel === 'Novice');
+                    if (noviceChecked.length > 2) {
+                        this.checked = false;
+                    }
+                }
+                updateNoviceCount();
+            });
+        });
+    </script>
+}
